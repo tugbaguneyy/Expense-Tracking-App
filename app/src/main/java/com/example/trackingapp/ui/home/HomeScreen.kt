@@ -1,10 +1,10 @@
-package com.example.trackingapp.ui.add
+package com.example.trackingapp.ui.home
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
 @Composable
-fun AddScreen(
+fun HomeScreen(
     navController : NavController
 ) {
 

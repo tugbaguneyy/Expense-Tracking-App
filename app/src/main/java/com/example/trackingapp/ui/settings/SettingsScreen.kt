@@ -1,11 +1,9 @@
-package com.example.trackingapp.ui.add
+package com.example.trackingapp.ui.settings
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
 @Composable
-fun AddScreen(
-    navController : NavController
-) {
+fun SettingsScreen(navController: NavController){
 
 }
