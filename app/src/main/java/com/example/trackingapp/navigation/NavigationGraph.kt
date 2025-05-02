@@ -11,6 +11,8 @@ import com.example.trackingapp.navigation.Screen.Tracking
 import com.example.trackingapp.navigation.Screen.Add
 import com.example.trackingapp.ui.add.AddScreen
 import com.example.trackingapp.ui.auth.AuthScreen
+import com.example.trackingapp.ui.auth.LoginScreen
+import com.example.trackingapp.ui.auth.RegisterScreen
 import com.example.trackingapp.ui.detail.DetailScreen
 import com.example.trackingapp.ui.home.HomeScreen
 import com.example.trackingapp.ui.settings.SettingsScreen
@@ -45,6 +47,12 @@ fun NavigationGraph(
         }
         composable<Add> {
             AddScreen(navController)
+        }
+        composable<Screen.Register> {
+            RegisterScreen(navController)
+        }
+        composable<Screen.Login>{
+            LoginScreen(navController)
         }
     }
 }
