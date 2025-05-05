@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trackingapp.domain.model.Expense
+import com.example.trackingapp.domain.usecase.CurrentUserUseCase
+import com.example.trackingapp.domain.usecase.SignOutUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,7 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val auth : FirebaseAuth,
-    private val db : FirebaseDatabase
+    private val db : FirebaseDatabase,
+    private val signOutUseCase: SignOutUseCase,
+    private val currentUserUseCase: CurrentUserUseCase
 ) : ViewModel() {
 
     private val userId=auth.currentUser?.uid ?: ""
@@ -39,7 +43,7 @@ class HomeViewModel @Inject constructor(
 
     fun signOut(){
         viewModelScope.launch {
-            auth.signOut()
+            signOutUseCase()
             _isAuthenticated.value = false
         }
     }

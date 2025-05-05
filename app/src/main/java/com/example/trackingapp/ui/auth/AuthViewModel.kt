@@ -2,6 +2,9 @@ package com.example.trackingapp.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.trackingapp.domain.usecase.CurrentUserUseCase
+import com.example.trackingapp.domain.usecase.SignInWithEmailAndPasswordUseCase
+import com.example.trackingapp.domain.usecase.SignUpWithEmailAndPasswordUseCase
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val auth : FirebaseAuth
+    private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
+    private val signUpWithEmailAndPasswordUseCase: SignUpWithEmailAndPasswordUseCase,
+    private val currentUserUseCase: CurrentUserUseCase
 ) : ViewModel() {
 
     private val _isAuthenticated= MutableStateFlow(false)
@@ -28,34 +33,28 @@ class AuthViewModel @Inject constructor(
     }
 
     private fun isUserAuthenticated(){
-        val isActive=auth.currentUser != null
-        _isAuthenticated.value=isActive
+        viewModelScope.launch {
+            currentUserUseCase.invoke().collect { it ->
+                _isAuthenticated.value = it != null
+            }
+        }
     }
 
     fun signUp(email: String, password: String,passwordConfirm: String) {
         viewModelScope.launch {
             if(password==passwordConfirm){
-                auth.createUserWithEmailAndPassword(email,password)
-                    .addOnSuccessListener {
-                        _isAuthenticated.value=true
-                    }
-                    .addOnFailureListener {
-                        _isAuthenticated.value = false
-                        _errorMessage.value = it.message
-                    }
+                signUpWithEmailAndPasswordUseCase(email, password).collect{
+                    _isAuthenticated.value = it
+                }
             }
         }
     }
 
     fun signIn(email : String, password : String){
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                _isAuthenticated.value = true
+        viewModelScope.launch {
+            signInWithEmailAndPasswordUseCase(email, password).collect{
+                _isAuthenticated.value = it
             }
-            .addOnFailureListener {
-                _isAuthenticated.value = false
-                _errorMessage.value = it.message
-            }
+        }
     }
-
 }
