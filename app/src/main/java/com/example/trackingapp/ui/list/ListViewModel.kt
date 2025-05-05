@@ -1,4 +1,4 @@
-package com.example.trackingapp.ui.home
+package com.example.trackingapp.ui.list
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -15,14 +15,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.collections.emptyList
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class ListViewModel @Inject constructor(
     private val auth : FirebaseAuth,
     private val db : FirebaseDatabase
 ) : ViewModel() {
 
-    private val userId=auth.currentUser?.uid ?: ""
+    private val userId = auth.currentUser?.uid ?: "" //8
+
     private val _isAuthenticated = MutableStateFlow(false)
     val isAuthenticated: StateFlow<Boolean>
         get() = _isAuthenticated.asStateFlow()
@@ -36,7 +38,6 @@ class HomeViewModel @Inject constructor(
         getAllExpense()
     }
 
-
     fun signOut(){
         viewModelScope.launch {
             auth.signOut()
@@ -44,18 +45,26 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getAllExpense(){
+    private fun isUserAuthenticated(){
+        val isActive = auth.currentUser != null
+        _isAuthenticated.value = isActive
+    }
+
+    private fun getAllExpense() {
         db.getReference("expenses").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val expenses=mutableListOf<Expense>()
+
+                val expenses = mutableListOf<Expense>()
 
                 for (data in snapshot.children) {
+
                     val expense = data.getValue(Expense::class.java)
+
                     if (expense != null && expense.userId == userId) {
                         expenses.add(expense)
                     }
                 }
-                _allExpense.value=expenses
+                _allExpense.value = expenses
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -64,15 +73,9 @@ class HomeViewModel @Inject constructor(
         })
     }
 
-    private fun isUserAuthenticated(){
-        val isActive = auth.currentUser != null
-        _isAuthenticated.value = isActive
-    }
-
     fun deleteExpense(expenseId: String) {
         viewModelScope.launch {
             db.getReference("expenses").child(expenseId).removeValue()
         }
-
     }
 }

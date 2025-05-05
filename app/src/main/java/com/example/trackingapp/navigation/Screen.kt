@@ -26,4 +26,7 @@ sealed interface Screen {
 
     @Serializable
     data object Login : Screen
+
+    @Serializable
+    data object List : Screen
 }

@@ -1,7 +1,6 @@
-package com.example.trackingapp.ui.home
+package com.example.trackingapp.ui.list
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,14 +10,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -32,13 +32,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.trackingapp.navigation.Screen
 
+
 @Composable
-fun HomeScreen(
+fun ListScreen(
     navController : NavController
 ) {
-    val viewModel = hiltViewModel<HomeViewModel>()
-    val isUserAuthenticated = viewModel.isAuthenticated.collectAsStateWithLifecycle()
 
+    val viewModel = hiltViewModel<ListViewModel>()
+    val isUserAuthenticated = viewModel.isAuthenticated.collectAsStateWithLifecycle()
     val allExpenses = viewModel.allExpense.collectAsStateWithLifecycle()
 
     LaunchedEffect(isUserAuthenticated.value) {
@@ -47,31 +48,19 @@ fun HomeScreen(
         }
     }
 
-    Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Home", fontSize = 24.sp)
-        Button(
-            onClick = {
-                viewModel.signOut()
-            }
-        ) {
-            Text(text = "Sign Out")
-        }
-
-        Column (modifier = Modifier.fillMaxSize()) {
-            Card {
-                Text("45 Lira")
-                Text("Bugün yapılan toplam harcama")
-            }
-            TextButton(
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
                 onClick = {
-                    navController.navigate(Screen.List)
+                    navController.navigate(Screen.Add)
                 }
             ) {
-                Text("Tümünü Gör")
+                Text(text = "+", fontSize = 30.sp)
             }
-        }
-
-        Card {
+        },
+        floatingActionButtonPosition = FabPosition.End
+    ) {
+        Column (modifier = Modifier.fillMaxSize().padding(it)){
             LazyColumn{
                 items(allExpenses.value.size) {
                     Card(
