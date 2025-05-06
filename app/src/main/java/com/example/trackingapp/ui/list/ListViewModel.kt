@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trackingapp.domain.model.Expense
 import com.example.trackingapp.domain.usecase.CurrentUserUseCase
+import com.example.trackingapp.util.Constants.REFS_EXPENSES
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -49,7 +50,7 @@ class ListViewModel @Inject constructor(
         viewModelScope.launch {
             val userId = currentUserUseCase().first()?.uid ?: return@launch
 
-            db.getReference("expenses").addValueEventListener(object : ValueEventListener {
+            db.getReference(REFS_EXPENSES).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     val expenses = mutableListOf<Expense>()
@@ -74,7 +75,7 @@ class ListViewModel @Inject constructor(
 
     fun deleteExpense(expenseId: String) {
         viewModelScope.launch {
-            db.getReference("expenses").child(expenseId).removeValue()
+            db.getReference(REFS_EXPENSES).child(expenseId).removeValue()
         }
     }
 }

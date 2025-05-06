@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.trackingapp.domain.model.Expense
 import com.example.trackingapp.domain.model.ExpenseCategory
 import com.example.trackingapp.domain.usecase.CurrentUserUseCase
+import com.example.trackingapp.util.Constants.REFS_EXPENSES
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
@@ -27,7 +28,7 @@ class AddViewModel @Inject constructor(
     ){
         viewModelScope.launch {
             val userId = currentUserUseCase().first()?.uid ?: return@launch
-            val ref = db.reference.child("expenses").push()
+            val ref = db.reference.child(REFS_EXPENSES).push()
             val id = ref.key ?: return@launch
             val expense= Expense(
                 id=id,
