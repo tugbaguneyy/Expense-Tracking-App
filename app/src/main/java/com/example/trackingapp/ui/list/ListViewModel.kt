@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trackingapp.domain.model.Expense
+import com.example.trackingapp.domain.usecase.CurrentUserUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -13,17 +14,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.collections.emptyList
 
 @HiltViewModel
 class ListViewModel @Inject constructor(
-    private val auth : FirebaseAuth,
-    private val db : FirebaseDatabase
+    private val db : FirebaseDatabase,
+    private val currentUserUseCase: CurrentUserUseCase
 ) : ViewModel() {
-
-    private val userId = auth.currentUser?.uid ?: "" //8
 
     private val _isAuthenticated = MutableStateFlow(false)
     val isAuthenticated: StateFlow<Boolean>
@@ -38,32 +38,38 @@ class ListViewModel @Inject constructor(
         getAllExpense()
     }
 
-    private fun isUserAuthenticated(){
-        val isActive = auth.currentUser != null
-        _isAuthenticated.value = isActive
+    fun isUserAuthenticated(){
+        viewModelScope.launch {
+            val isActive = currentUserUseCase().first() != null
+            _isAuthenticated.value = isActive
+        }
     }
 
     private fun getAllExpense() {
-        db.getReference("expenses").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        viewModelScope.launch {
+            val userId = currentUserUseCase().first()?.uid ?: return@launch
 
-                val expenses = mutableListOf<Expense>()
+            db.getReference("expenses").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
 
-                for (data in snapshot.children) {
+                    val expenses = mutableListOf<Expense>()
 
-                    val expense = data.getValue(Expense::class.java)
+                    for (data in snapshot.children) {
 
-                    if (expense != null && expense.userId == userId) {
-                        expenses.add(expense)
+                        val expense = data.getValue(Expense::class.java)
+
+                        if (expense != null && expense.userId == userId) {
+                            expenses.add(expense)
+                        }
                     }
+                    _allExpense.value = expenses
                 }
-                _allExpense.value = expenses
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("Firebase", "Veri çekme iptal edildi: ${error.message}")
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("Firebase", "Veri çekme iptal edildi: ${error.message}")
+                }
+            })
+        }
     }
 
     fun deleteExpense(expenseId: String) {
