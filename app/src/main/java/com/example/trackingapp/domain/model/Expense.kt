@@ -6,11 +6,11 @@ import java.util.Date
 
 @IgnoreExtraProperties
 data class Expense(
-    val id : String = "",
-    val userId : String = "",
-    val title : String = "",
-    val description : String = "",
-    val amount : Double = 0.0,
-    val date : Date = Date(),
-    val category: ExpenseCategory = ExpenseCategory.OTHER
+    var id : String? = "",
+    var userId : String? = "",
+    var title : String? = "",
+    var description : String? = "",
+    var amount : Double? = 0.0,
+    val date : Date? = Date(),
+    val category: ExpenseCategory? = ExpenseCategory.OTHER
 )
