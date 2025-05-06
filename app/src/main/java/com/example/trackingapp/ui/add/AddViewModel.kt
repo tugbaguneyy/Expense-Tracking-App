@@ -3,25 +3,30 @@ package com.example.trackingapp.ui.add
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trackingapp.domain.model.Expense
-import com.google.firebase.auth.FirebaseAuth
+import com.example.trackingapp.domain.model.ExpenseCategory
+import com.example.trackingapp.domain.usecase.CurrentUserUseCase
 import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class AddViewModel @Inject constructor(
     private val db : FirebaseDatabase,
-    private val auth : FirebaseAuth
+    private val currentUserUseCase: CurrentUserUseCase
 ) : ViewModel(){
 
     fun addExpense(
         title : String,
         description : String,
-        amount : Double
+        amount : Double,
+        category: ExpenseCategory,
+        date: Date
     ){
         viewModelScope.launch {
-            val userId=auth.currentUser?.uid ?: return@launch
+            val userId = currentUserUseCase().first()?.uid ?: return@launch
             val ref = db.reference.child("expenses").push()
             val id = ref.key ?: return@launch
             val expense= Expense(
@@ -29,7 +34,9 @@ class AddViewModel @Inject constructor(
                 userId=userId,
                 title=title,
                 description=description,
-                amount=amount
+                amount=amount,
+                category = category,
+                date = date
             )
             ref.setValue(expense)
         }

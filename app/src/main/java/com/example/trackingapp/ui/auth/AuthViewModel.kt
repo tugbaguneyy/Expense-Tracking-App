@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.trackingapp.domain.usecase.CurrentUserUseCase
 import com.example.trackingapp.domain.usecase.SignInWithEmailAndPasswordUseCase
 import com.example.trackingapp.domain.usecase.SignUpWithEmailAndPasswordUseCase
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,7 +33,7 @@ class AuthViewModel @Inject constructor(
 
     private fun isUserAuthenticated(){
         viewModelScope.launch {
-            currentUserUseCase.invoke().collect { it ->
+            currentUserUseCase().collect { it ->
                 _isAuthenticated.value = it != null
             }
         }

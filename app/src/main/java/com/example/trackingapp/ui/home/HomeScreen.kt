@@ -1,21 +1,17 @@
 package com.example.trackingapp.ui.home
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -23,107 +19,78 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.trackingapp.navigation.Screen
+import com.example.trackingapp.ui.home.components.DailySummaryCard
+import com.example.trackingapp.ui.home.components.QuickActionsRow
+import com.example.trackingapp.ui.home.components.TransactionItem
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navController : NavController
+    navController: NavController
 ) {
+
     val viewModel = hiltViewModel<HomeViewModel>()
-    val isUserAuthenticated = viewModel.isAuthenticated.collectAsStateWithLifecycle()
 
-    val allExpenses = viewModel.allExpense.collectAsStateWithLifecycle()
+    val expenses = viewModel.expenses.collectAsStateWithLifecycle()
+    val dailyTotal = viewModel.dailyTotal.collectAsStateWithLifecycle()
+    val isAuthenticated = viewModel.isAuthenticated.collectAsStateWithLifecycle()
 
-    LaunchedEffect(isUserAuthenticated.value) {
-        if (!isUserAuthenticated.value){
+    LaunchedEffect(Unit) {
+        if (!isAuthenticated.value){
             navController.navigate(Screen.Login)
         }
     }
 
-    Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Home", fontSize = 24.sp)
-        Button(
-            onClick = {
-                viewModel.signOut()
-            }
-        ) {
-            Text(text = "Sign Out")
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        // Daily Summary Card
+        item {
+            DailySummaryCard(dailyTotal = dailyTotal.value)
         }
 
-        Column (modifier = Modifier.fillMaxSize()) {
-            Card {
-                Text("45 Lira")
-                Text("Bugün yapılan toplam harcama")
-            }
-            TextButton(
-                onClick = {
-                    navController.navigate(Screen.List)
-                }
+        // Quick Actions
+        item {
+            QuickActionsRow(navController = navController)
+        }
+
+        // Recent Transactions Header
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Tümünü Gör")
+                Text(
+                    text = "Son Harcamalar",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                TextButton(
+                    onClick = { navController.navigate(Screen.List) }
+                ) {
+                    Text("Tümünü Gör")
+                    Icon(
+                        Icons.Default.KeyboardArrowRight,
+                        contentDescription = null,
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
+                }
             }
         }
 
-        Card {
-            LazyColumn{
-                items(allExpenses.value.size) {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                        shape = RoundedCornerShape(12.dp),
-                        elevation = CardDefaults.cardElevation(6.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(4.dp)
-                            ) {
-                                Text(
-                                    text = allExpenses.value[it].title,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Text(
-                                    text = allExpenses.value[it].description,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Color.Gray
-                                )
-                                Text(
-                                    text = "${allExpenses.value[it].amount} ₺",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    color = Color(0xFF388E3C),
-                                    fontWeight = FontWeight.SemiBold
-                                )
-                            }
-
-                            IconButton(
-                                onClick = {
-                                    viewModel.deleteExpense(allExpenses.value[it].id)
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Delete,
-                                    contentDescription = "Delete Expense",
-                                    tint = Color.Red
-                                )
-                            }
-                        }
-                    }
-                }
-            }
+        // Recent Transactions List
+        items(
+            items = expenses.value.take(5)
+        ) { expense->
+            TransactionItem(expense=expense)
         }
     }
 }

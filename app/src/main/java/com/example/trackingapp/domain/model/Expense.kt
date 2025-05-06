@@ -12,4 +12,5 @@ data class Expense(
     val description : String = "",
     val amount : Double = 0.0,
     val date : Date = Date(),
+    val category: ExpenseCategory = ExpenseCategory.OTHER
 )
