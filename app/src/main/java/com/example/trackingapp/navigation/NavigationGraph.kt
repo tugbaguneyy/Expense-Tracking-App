@@ -5,10 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.trackingapp.navigation.Screen.Auth
-import com.example.trackingapp.navigation.Screen.Home
 import com.example.trackingapp.navigation.Screen.Tracking
-import com.example.trackingapp.navigation.Screen.Add
 import com.example.trackingapp.ui.add.AddScreen
 import com.example.trackingapp.ui.auth.AuthScreen
 import com.example.trackingapp.ui.auth.LoginScreen
@@ -31,10 +28,10 @@ fun NavigationGraph(
         navController = navController,
         startDestination = startDestination,
     ) {
-        composable<Auth> {
+        composable<Screen.Auth> {
             AuthScreen(navController)
         }
-        composable<Home> {
+        composable<Screen.Home> {
             HomeScreen(navController)
         }
         composable<Screen.Detail> {
@@ -46,7 +43,7 @@ fun NavigationGraph(
         composable<Tracking> {
             TrackingScreen(navController)
         }
-        composable<Add> {
+        composable<Screen.Add> {
             AddScreen(navController)
         }
         composable<Screen.Register> {
