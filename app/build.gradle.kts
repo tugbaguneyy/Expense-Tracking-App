@@ -88,4 +88,7 @@ dependencies {
 
     //Icons Library
     implementation("androidx.compose.material:material-icons-extended:$2024.05.00")
+
+    //data store
+    implementation(libs.datastore.preferences)
 }

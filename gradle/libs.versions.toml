@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.0"
+datastorePreferences = "1.1.1"
 kotlin = "2.1.10"
 core-ktx = "1.15.0"
 junit = "4.13.2"
@@ -22,6 +23,7 @@ roomCommonJvm = "2.7.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 junit-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junit-ext" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
