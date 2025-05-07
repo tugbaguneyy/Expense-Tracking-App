@@ -56,10 +56,10 @@ fun HomeScreen(
             DailySummaryCard(dailyTotal = dailyTotal.value)
         }
 
-        // Quick Actions
-        item {
-            QuickActionsRow(navController = navController)
-        }
+//        // Quick Actions
+//        item {
+//            QuickActionsRow(navController = navController)
+//        }
 
         // Recent Transactions Header
         item {

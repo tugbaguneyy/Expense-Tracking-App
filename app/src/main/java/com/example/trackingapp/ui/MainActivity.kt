@@ -66,10 +66,10 @@ class MainActivity : ComponentActivity() {
                         // Yalnızca Auth sayfalarında değilse TopBar'ı göster
                         if (!isAuthScreen) {
                             val title = when {
-                                isCurrentScreen(Screen.Home::class) -> "Home Screen"
-                                isCurrentScreen(Screen.List::class) -> "List Screen"
-                                isCurrentScreen(Screen.Settings::class) -> "Settings"
-                                isCurrentScreen(Screen.Add::class) -> "Add Expense"
+                                isCurrentScreen(Screen.Home::class) -> "Home"
+                                isCurrentScreen(Screen.List::class) -> "Harcamalar"
+                                isCurrentScreen(Screen.Settings::class) -> "Ayarlar"
+                                isCurrentScreen(Screen.Add::class) -> "Harcama Ekle"
                                 // Uygulamanızdaki diğer ekranları buraya ekleyebilirsiniz
                                 else -> "Not Found"
                             }

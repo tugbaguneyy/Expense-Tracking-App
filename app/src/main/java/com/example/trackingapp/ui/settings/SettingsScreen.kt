@@ -43,35 +43,35 @@ fun SettingsScreen(
             modifier = Modifier.padding(vertical = 16.dp)
         )
 
-        // Change Password
-        SettingsItem(
-            icon = Icons.Outlined.Lock,
-            title = "Şifre Değiştir",
-            subtitle = "Hesap şifrenizi güncelleyin",
-            trailingContent = {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-            },
-            onClick = { /* TODO */ }
-        )
-
-        // Edit Profile
-        SettingsItem(
-            icon = Icons.Outlined.Person,
-            title = "Profili Düzenle",
-            subtitle = "Kişisel bilgilerinizi güncelleyin",
-            trailingContent = {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-            },
-            onClick = { /* TODO */ }
-        )
+//        // Change Password
+//        SettingsItem(
+//            icon = Icons.Outlined.Lock,
+//            title = "Şifre Değiştir",
+//            subtitle = "Hesap şifrenizi güncelleyin",
+//            trailingContent = {
+//                Icon(
+//                    imageVector = Icons.Default.KeyboardArrowRight,
+//                    contentDescription = null,
+//                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+//                )
+//            },
+//            onClick = { /* TODO */ }
+//        )
+//
+//        // Edit Profile
+//        SettingsItem(
+//            icon = Icons.Outlined.Person,
+//            title = "Profili Düzenle",
+//            subtitle = "Kişisel bilgilerinizi güncelleyin",
+//            trailingContent = {
+//                Icon(
+//                    imageVector = Icons.Default.KeyboardArrowRight,
+//                    contentDescription = null,
+//                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+//                )
+//            },
+//            onClick = { /* TODO */ }
+//        )
 
         // Logout
         SettingsItem(
@@ -130,80 +130,80 @@ fun SettingsScreen(
             onClick = { /* TODO */ }
         )
 
-        // Notifications Section
-        Text(
-            text = "Bildirimler",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(vertical = 16.dp)
-        )
-
-        SettingsItem(
-            icon = Icons.Outlined.Notifications,
-            title = "Bildirim Ayarları",
-            subtitle = "Bildirim tercihlerinizi yönetin",
-            trailingContent = {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-            },
-            onClick = { /* TODO */ }
-        )
-
-        // Data Management Section
-        Text(
-            text = "Veri Yönetimi",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(vertical = 16.dp)
-        )
-
-        // Export Data
-        SettingsItem(
-            icon = Icons.Outlined.Download,
-            title = "Verileri Dışa Aktar",
-            subtitle = "Harcama verilerinizi yedekleyin",
-            trailingContent = {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-            },
-            onClick = { /* TODO */ }
-        )
-
-        // Import Data
-        SettingsItem(
-            icon = Icons.Outlined.Upload,
-            title = "Verileri İçe Aktar",
-            subtitle = "Yedeklenen verilerinizi geri yükleyin",
-            trailingContent = {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-            },
-            onClick = { /* TODO */ }
-        )
-
-        // Clear Data
-        SettingsItem(
-            icon = Icons.Outlined.Delete,
-            title = "Verileri Temizle",
-            subtitle = "Tüm harcama verilerinizi silin",
-            trailingContent = {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-            },
-            onClick = { /* TODO */ }
-        )
+//        // Notifications Section
+//        Text(
+//            text = "Bildirimler",
+//            style = MaterialTheme.typography.titleLarge,
+//            color = MaterialTheme.colorScheme.primary,
+//            modifier = Modifier.padding(vertical = 16.dp)
+//        )
+//
+//        SettingsItem(
+//            icon = Icons.Outlined.Notifications,
+//            title = "Bildirim Ayarları",
+//            subtitle = "Bildirim tercihlerinizi yönetin",
+//            trailingContent = {
+//                Icon(
+//                    imageVector = Icons.Default.KeyboardArrowRight,
+//                    contentDescription = null,
+//                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+//                )
+//            },
+//            onClick = { /* TODO */ }
+//        )
+//
+//        // Data Management Section
+//        Text(
+//            text = "Veri Yönetimi",
+//            style = MaterialTheme.typography.titleLarge,
+//            color = MaterialTheme.colorScheme.primary,
+//            modifier = Modifier.padding(vertical = 16.dp)
+//        )
+//
+//        // Export Data
+//        SettingsItem(
+//            icon = Icons.Outlined.Download,
+//            title = "Verileri Dışa Aktar",
+//            subtitle = "Harcama verilerinizi yedekleyin",
+//            trailingContent = {
+//                Icon(
+//                    imageVector = Icons.Default.KeyboardArrowRight,
+//                    contentDescription = null,
+//                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+//                )
+//            },
+//            onClick = { /* TODO */ }
+//        )
+//
+//        // Import Data
+//        SettingsItem(
+//            icon = Icons.Outlined.Upload,
+//            title = "Verileri İçe Aktar",
+//            subtitle = "Yedeklenen verilerinizi geri yükleyin",
+//            trailingContent = {
+//                Icon(
+//                    imageVector = Icons.Default.KeyboardArrowRight,
+//                    contentDescription = null,
+//                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+//                )
+//            },
+//            onClick = { /* TODO */ }
+//        )
+//
+//        // Clear Data
+//        SettingsItem(
+//            icon = Icons.Outlined.Delete,
+//            title = "Verileri Temizle",
+//            subtitle = "Tüm harcama verilerinizi silin",
+//            trailingContent = {
+//                Icon(
+//                    imageVector = Icons.Default.KeyboardArrowRight,
+//                    contentDescription = null,
+//                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+//                )
+//            },
+//            onClick = { /* TODO */ }
+//        )
 
         // About Section
         Text(
