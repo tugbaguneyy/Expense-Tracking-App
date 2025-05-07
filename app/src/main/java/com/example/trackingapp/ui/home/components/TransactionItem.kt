@@ -61,15 +61,7 @@ fun TransactionItem(expense: Expense) {
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = when (expense.category) {
-                            ExpenseCategory.FOOD -> Icons.Outlined.Restaurant
-                            ExpenseCategory.TRANSPORT -> Icons.Outlined.DirectionsCar
-                            ExpenseCategory.SHOPPING -> Icons.Outlined.ShoppingCart
-                            ExpenseCategory.BILLS -> Icons.Outlined.Receipt
-                            ExpenseCategory.ENTERTAINMENT -> Icons.Outlined.Movie
-                            ExpenseCategory.HEALTH -> Icons.Outlined.LocalHospital
-                            else -> Icons.Outlined.Category
-                        },
+                        imageVector = expense.category!!.icon,
                         contentDescription = null,
                         modifier = Modifier.size(24.dp)
                     )

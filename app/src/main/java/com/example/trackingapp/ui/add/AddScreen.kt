@@ -312,7 +312,7 @@ fun AddScreen(
                             headlineContent = { Text(category.displayName) },
                             leadingContent = {
                                 Icon(
-                                    imageVector = Icons.Default.Category,
+                                    imageVector = category.icon,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.primary
                                 )

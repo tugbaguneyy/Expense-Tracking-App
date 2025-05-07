@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.trackingapp.navigation.Screen
 import com.example.trackingapp.ui.settings.components.SettingsItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -268,8 +269,9 @@ fun SettingsScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        navController.navigate("login") {
-                            popUpTo("home") { inclusive = true }
+                        viewModel.signOut()
+                        navController.navigate(Screen.Login) {
+                            popUpTo(Screen.Home) { inclusive = true }
                         }
                     }
                 ) {

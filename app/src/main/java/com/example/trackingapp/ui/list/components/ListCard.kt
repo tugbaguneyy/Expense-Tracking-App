@@ -20,7 +20,7 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,7 +38,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.trackingapp.domain.model.Expense
-import com.example.trackingapp.ui.list.getCategoryIcon
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -94,7 +93,7 @@ fun ListCard(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                imageVector = getCategoryIcon(expense.category!!),
+                                imageVector = expense.category!!.icon,
                                 contentDescription = "Category",
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(24.dp)
@@ -181,7 +180,7 @@ fun ListCard(
                             .fillMaxWidth()
                             .padding(top = 12.dp)
                     ) {
-                        Divider(
+                        HorizontalDivider(
                             modifier = Modifier.padding(vertical = 8.dp),
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
                         )

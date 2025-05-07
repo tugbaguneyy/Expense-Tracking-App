@@ -70,7 +70,6 @@ class MainActivity : ComponentActivity() {
                                 isCurrentScreen(Screen.List::class) -> "List Screen"
                                 isCurrentScreen(Screen.Settings::class) -> "Settings"
                                 isCurrentScreen(Screen.Add::class) -> "Add Expense"
-                                isCurrentScreen(Screen.Detail::class) -> "Detail"
                                 // Uygulamanızdaki diğer ekranları buraya ekleyebilirsiniz
                                 else -> "Not Found"
                             }

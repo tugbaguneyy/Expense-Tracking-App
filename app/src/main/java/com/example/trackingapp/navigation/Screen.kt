@@ -10,9 +10,6 @@ sealed interface Screen {
     data object Home : Screen
 
     @Serializable
-    data object Detail : Screen
-
-    @Serializable
     data object Settings : Screen
 
     @Serializable

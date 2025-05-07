@@ -3,6 +3,7 @@ package com.example.trackingapp.ui.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trackingapp.data.local.AppDataStore
+import com.example.trackingapp.domain.usecase.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val appDataStore: AppDataStore
+    private val appDataStore: AppDataStore,
+    private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
 
     private val _isDarkMode = MutableStateFlow(false)
@@ -34,6 +36,12 @@ class SettingsViewModel @Inject constructor(
     fun setDarkMode(isDarkMode : Boolean){
         viewModelScope.launch {
             appDataStore.setDarkMode(isDarkMode)
+        }
+    }
+
+    fun signOut(){
+        viewModelScope.launch {
+            signOutUseCase()
         }
     }
 }
