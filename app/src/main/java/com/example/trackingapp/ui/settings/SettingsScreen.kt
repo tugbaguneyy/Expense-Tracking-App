@@ -11,6 +11,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.trackingapp.ui.settings.components.SettingsItem
 
@@ -19,7 +21,9 @@ import com.example.trackingapp.ui.settings.components.SettingsItem
 fun SettingsScreen(
     navController: NavController
 ) {
-    var darkMode by remember { mutableStateOf(false) }
+    val viewModel = hiltViewModel<SettingsViewModel>()
+    var darkMode = viewModel.isDarkMode.collectAsStateWithLifecycle()
+
     var selectedCurrency by remember { mutableStateOf("TRY") }
     var showLogoutDialog by remember { mutableStateOf(false) }
 
@@ -98,8 +102,10 @@ fun SettingsScreen(
             subtitle = "Uygulamayı karanlık temada kullan",
             trailingContent = {
                 Switch(
-                    checked = darkMode,
-                    onCheckedChange = { darkMode = it },
+                    checked = darkMode.value,
+                    onCheckedChange = {
+                        viewModel.setDarkMode(it)
+                    },
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = MaterialTheme.colorScheme.primary,
                         checkedTrackColor = MaterialTheme.colorScheme.primaryContainer
