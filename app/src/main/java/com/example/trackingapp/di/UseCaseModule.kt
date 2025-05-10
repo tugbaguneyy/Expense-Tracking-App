@@ -1,12 +1,10 @@
 package com.example.trackingapp.di
 
-import com.example.trackingapp.data.repository.FirebaseAuthImpl
+import com.example.trackingapp.data.remote.repository.FirebaseAuthImpl
 import com.example.trackingapp.domain.usecase.CurrentUserUseCase
 import com.example.trackingapp.domain.usecase.SignInWithEmailAndPasswordUseCase
 import com.example.trackingapp.domain.usecase.SignOutUseCase
 import com.example.trackingapp.domain.usecase.SignUpWithEmailAndPasswordUseCase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 import dagger.Module
 import dagger.Provides
